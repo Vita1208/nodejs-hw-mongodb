@@ -1,21 +1,19 @@
 import { Schema, model } from 'mongoose';
 import { contactTypeList, phoneNumberRegex } from '../../constants/contacts.js';
-import { hadleSaveError, setUpdateOptions } from './hooks.js';
+import { handleSaveError, setUpdateOptions } from './hooks.js';
 
 const contactSchema = new Schema(
   {
     name: {
       type: String,
-      required: [true,'The name field is required' ],
+      required: [true, 'The name field is required'],
       minlength: 3,
       maxlength: 20,
     },
     phoneNumber: {
       type: String,
       match: phoneNumberRegex,
-      required: [true,'The phone number field is required'],
-      minlength: 3,
-      maxlength: 20,
+      required: [true, 'The phone number field is required'],
     },
     email: {
       type: String,
@@ -33,16 +31,18 @@ const contactSchema = new Schema(
       enum: contactTypeList,
       required: true,
       default: 'personal',
-      minlength: 3,
-      maxlength: 20,
+    },
+    userId: {
+      type: Schema.Types.ObjectId,
+      ref: 'user',
+      required: true,
     },
   },
   { versionKey: false, timestamps: true },
 );
-contactSchema.post("save", hadleSaveError);
-contactSchema.pre("findOneAndUpdate", setUpdateOptions);
-contactSchema.post("findOneAndUpdate", hadleSaveError);
-
+contactSchema.post('save', handleSaveError);
+contactSchema.pre('findOneAndUpdate', setUpdateOptions);
+contactSchema.post('findOneAndUpdate', handleSaveError);
 const ContactCollection = model('contact', contactSchema);
 export const sortFields = [
   'name',
