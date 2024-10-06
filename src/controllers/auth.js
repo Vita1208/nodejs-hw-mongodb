@@ -15,7 +15,7 @@ export const registerController = async (req, res) => {
   const newUser = await authServices.register(req.body);
   res.status(201).json({
     status: 201,
-    message: 'Successfully registered a user!',
+    message: 'Successfully registered user',
     data: newUser,
   });
 };
@@ -25,7 +25,7 @@ export const loginController = async (req, res) => {
   setupSession(res, session);
   res.json({
     status: 200,
-    message: 'Successfully logged in an user!',
+    message: 'User successfully logged in.',
     data: {
       accessToken: session.accessToken,
     },
@@ -41,7 +41,7 @@ export const refreshController = async (req, res) => {
   setupSession(res, session);
   res.json({
     status: 200,
-    message: 'Successfully refreshed a session!',
+    message: 'Session successfully refreshed.',
     data: {
       accessToken: session.accessToken,
     },
@@ -55,4 +55,22 @@ export const logoutController = async (req, res) => {
   res.clearCookie('sessionId');
   res.clearCookie('refreshToken');
   res.status(204).send();
+};
+
+export const requestResetEmailController = async (req, res) => {
+  await authServices.requestResetToken(req.body.email);
+  res.json({
+    message: 'Reset password email has been successfully sent.',
+    status: 200,
+    data: {},
+  });
+};
+
+export const resetPasswordController = async (req, res) => {
+  await authServices.resetPassword(req.body);
+  res.json({
+    message: 'Password has been successfully reset!',
+    status: 200,
+    data: {},
+  });
 };
