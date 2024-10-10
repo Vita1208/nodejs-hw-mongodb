@@ -7,11 +7,11 @@
       "name": "Apache 2.0",
       "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "description": "This is a contacts management app."
+    "description": "This is a contacts management app. Users can create, read, update, and delete contacts. The app also supports user authentication using JWT tokens.\n"
   },
   "servers": [
     {
-      "url": "http://localhost:3000"
+      "url": "https://contacts-app-7-w06w.onrender.com"
     }
   ],
   "tags": [
